@@ -22,7 +22,7 @@ https://forums.atariage.com/topic/346024-intellivision-rto-multicart-new-multica
 https://forums.atariage.com/topic/360687-pirto-preview-new-rto-multicart-powered-by-raspberry-pico/
 
 
-![ScreenShot](https://raw.githubusercontent.com/aotta/PiRTO/main/pictures/PiRTO1.jpg)
-![ScreenShot](https://raw.githubusercontent.com/aotta/PiRTO/main/pictures/PiRTO2.jpg)
-![ScreenShot](https://raw.githubusercontent.com/aotta/PiRTO/main/pictures/PiRTO3.jpg)
+![ScreenShot](https://raw.githubusercontent.com/aotta/PiRTO/main/pictures/PiRTO1.jpeg)
+![ScreenShot](https://raw.githubusercontent.com/aotta/PiRTO/main/pictures/PiRTO2.jpeg)
+![ScreenShot](https://raw.githubusercontent.com/aotta/PiRTO/main/pictures/PiRTO3.jpeg)
 

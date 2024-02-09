@@ -7,6 +7,7 @@ Use only 74lvc245 IC, not LVC ones are not 3,3 tolerant and may damage your Pico
 Solder the microSD arduino shields on BOTTOM of the board.
 
 Error codes (number of led flashes every second then 2 seconds pause):
+
 1 blinks: Files too big  
 
 2 blinks: Verify BIN files error   

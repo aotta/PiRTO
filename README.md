@@ -1,4 +1,4 @@
-# RTO-Cart
+# PiRTO
 RTO-Cart porting to Raspberry PI Pico board, with on-screen menu for selecting files.
 
 Assembly notes:

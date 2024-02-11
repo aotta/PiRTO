@@ -4,7 +4,7 @@ RTO-Cart porting to Raspberry PI Pico board, with on-screen menu for selecting f
 Assembly notes:
 Use only 74lvc245 IC, not LVC ones are not 3,3 tolerant and may damage your Pico.
 
-Solder the microSD arduino shields on BOTTOM of the board.
+Solder the microSD arduino shields on BOTTOM of the board. Cut the pin to avoid they touche the Pico board on other sides.
 
 Error codes (number of led flashes every second then 2 seconds pause):
 
@@ -31,4 +31,6 @@ https://forums.atariage.com/topic/360687-pirto-preview-new-rto-multicart-powered
 ![ScreenShot](https://raw.githubusercontent.com/aotta/PiRTO/main/pictures/pirto1.jpeg)
 ![ScreenShot](https://raw.githubusercontent.com/aotta/PiRTO/main/pictures/pirto2.jpeg)
 ![ScreenShot](https://raw.githubusercontent.com/aotta/PiRTO/main/pictures/pirto3.jpeg)
+![ScreenShot](https://raw.githubusercontent.com/aotta/PiRTO/main/pictures/pirto4.jpg)
+![ScreenShot](https://raw.githubusercontent.com/aotta/PiRTO/main/pictures/pirto5.jpg)
 

@@ -1,6 +1,9 @@
 # PiRTO
 RTO-Cart porting to Raspberry PI Pico board, with on-screen menu for selecting files.
 
+WARNING! PiRTO was tested on Intellivision PAL consoles, it seems it doesn't still work on NTSC one! i'm working on it and i'll update software asap i'll fix the issue
+
+
 Assembly notes:
 Use only 74lvc245 IC, not LVC ones are not 3,3 tolerant and may damage your Pico.
 

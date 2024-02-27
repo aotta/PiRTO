@@ -12,7 +12,7 @@
 #define NTSC    // use if you want delays for NTSC machines
 
 #ifdef NTSC
-// (270mhz: 134 x PAL, 170 x NTSC) 
+// (270mhz: 134 x PAL, 176 x NTSC) 
 #define delWR "nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;" \
               "nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;" \
               "nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;" \
@@ -21,7 +21,7 @@
               "nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;" \
               "nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;" \
               "nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;" \
-              "nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;" 
+              "nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;" 
               
               
 // (270mhz: 104 x PAL, 144 x NTSC)

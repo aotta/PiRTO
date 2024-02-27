@@ -1,7 +1,7 @@
 # PiRTO
 RTO-Cart porting to Raspberry PI Pico board, with on-screen menu for selecting files.
 
-WARNING! PiRTO was tested on Intellivision PAL consoles, it seems it doesn't still work on NTSC one! i'm working on it and i'll update software asap i'll fix the issue
+WARNING! PiRTO was developed and tested with PAL consoles, but for NTSC you need to use the .NTSC firmware that include longer delays for NTSC console
 
 
 Assembly notes:

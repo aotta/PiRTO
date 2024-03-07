@@ -12,7 +12,7 @@
 #define NTSC    // use if you want delays for NTSC machines
 
 #ifdef NTSC
-// (270mhz: 134 x PAL, 176 x NTSC) 
+// (270mhz: 134 x PAL, 178 x NTSC) 
 #define delWR "nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;" \
               "nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;" \
               "nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;" \
@@ -21,10 +21,8 @@
               "nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;" \
               "nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;" \
               "nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;" \
-              "nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;" 
-              
-              
-// (270mhz: 104 x PAL, 144 x NTSC)
+              "nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;" 
+// (270mhz: 104 x PAL, 146 x NTSC)
 #define delRD "nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;" \
               "nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;" \
               "nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;" \
@@ -32,7 +30,7 @@
               "nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;" \
               "nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;" \
               "nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;" \
-              "nop;nop;nop;nop;"
+              "nop;nop;nop;nop;nop;nop;"
 #else // PAL! 
 // (270mhz: 134 x PAL, 176 x NTSC)
 #define delWR "nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;nop;" \
@@ -55,6 +53,7 @@
 #include "hardware/gpio.h"
 #include "pico/platform.h"
 #include "pico/stdlib.h"
+#include "hardware/vreg.h"
 #include "pico/multicore.h"
 #include "pico/divider.h"
 #include "hardware/flash.h"
@@ -74,7 +73,7 @@
 // these be sure they are legal or the program will crash.
 // See: https://datasheets.raspberrypi.com/picow/PicoW-A4-Pinout.pdf
 const int _MISO = 16;//4;  // AKA SPI RX
-const int _MOSI = 19;//77;  // AKA SPI TX
+const int _MOSI = 19;//7;  // AKA SPI TX
 const int _CS = 17;//5;
 const int _SCK = 18;//6;
 
@@ -1015,8 +1014,10 @@ void __time_critical_func(setup()) {
   // (flash incurs loading latency that prevents us from keeping up with the
   // Intellivision bus).
   //
- 
+  vreg_set_voltage(VREG_VOLTAGE_1_15);
+  delay(100); // to stabilize voltage
   set_sys_clock_khz(270000, true); // settled in compiler IDE as 250mhz overclocked
+
 
  // Initialize the bus state variables
 
@@ -1094,7 +1095,7 @@ void loop()
   
 void setup1()
 {
-  delay(80);
+  delay(480);
 
  
 }

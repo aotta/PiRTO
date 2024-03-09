@@ -6,6 +6,8 @@ WARNING! PiRTO was developed and tested with PAL consoles, but for NTSC you need
 
 Assembly notes:
 Use only 74lvc245 IC, not LVC ones are not 3,3 tolerant and may damage your Pico.
+For SMD pcb version: added 3 jumper, connect 3v3 and Gnd ones, but leave open Shield jumper, connecting to Gnd seems shorting some Pico chinese clones.
+
 
 Solder the microSD arduino shields on BOTTOM of the board, BEFORE you solder the Pico. Cut the pin to avoid they touche the Pico board on other sides.
 

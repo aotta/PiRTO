@@ -34,8 +34,8 @@ https://forums.atariage.com/topic/360687-pirto-preview-new-rto-multicart-powered
 
 ![ScreenShot](https://raw.githubusercontent.com/aotta/PiRTO/main/pictures/pirto0.jpg)
 ![ScreenShot](https://raw.githubusercontent.com/aotta/PiRTO/main/pictures/pirto1.jpeg)
-![ScreenShot](https://raw.githubusercontent.com/aotta/PiRTO/main/pictures/pirto6.jpeg)
-![ScreenShot](https://raw.githubusercontent.com/aotta/PiRTO/main/pictures/pirto7.jpeg)
+![ScreenShot](https://raw.githubusercontent.com/aotta/PiRTO/main/pictures/Pirto6.jpeg)
+![ScreenShot](https://raw.githubusercontent.com/aotta/PiRTO/main/pictures/Pirto7.jpeg)
 ![ScreenShot](https://raw.githubusercontent.com/aotta/PiRTO/main/pictures/pirto4.jpg)
 ![ScreenShot](https://raw.githubusercontent.com/aotta/PiRTO/main/pictures/pirto5.jpg)
 

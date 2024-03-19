@@ -9,7 +9,7 @@
 //  More info on https://github.com/aotta/RTO-Cart
 */
 
-#define NTSC    // use if you want delays for NTSC machines
+//#define NTSC    // use if you want delays for NTSC machines
 
 #ifdef NTSC
 // (270mhz: 134 x PAL, 178 x NTSC) 
@@ -820,7 +820,9 @@ void __time_critical_func(IntyMenu()) {
         String(entry.name()).toCharArray(longfilename,60);
    
         if(entry.isDirectory()) {   //handling subdirectory
-            if (strcmp(longfilename,"System Volume Information")==0) {
+        // change by Tissemon for skipping Mac system files
+        if (strcmp(longfilename,"System Volume Information")==0 || longfilename[0]=='_' || (longfilename[0]=='.' && longfilename[1]!='.')) {
+         //   if (strcmp(longfilename,"System Volume Information")==0) {
               memset(longfilename,0,60); 
               for(int i=0;i<20;i++){
                 int poke=(0x17f+i*2)+(numcurriga*40);
@@ -1014,7 +1016,7 @@ void __time_critical_func(setup()) {
   // (flash incurs loading latency that prevents us from keeping up with the
   // Intellivision bus).
   //
-  vreg_set_voltage(VREG_VOLTAGE_1_15);
+  vreg_set_voltage(VREG_VOLTAGE_1_10); // set to 1_15 or 1_20 if you experience some glitches
   delay(100); // to stabilize voltage
   set_sys_clock_khz(270000, true); // settled in compiler IDE as 250mhz overclocked
 

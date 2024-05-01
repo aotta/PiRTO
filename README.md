@@ -1,4 +1,10 @@
 # PiRTO
+
+##Version 1.1 upgrade:
+New version doesn't use anymore hardcoded delay in bus cycles, so it should work for every Intellivision (NTSC,PAL or SECAM).
+I included two version of the uf2 firmware in binaries folder, since the 270mhz is very overclocked and i found some issue on some of my Pico's.
+The 250mhz is more stable, but not fast enough to handle games with lot of pages (i.e. Antartic Tales).
+
 RTO-Cart porting to Raspberry PI Pico board, with on-screen menu for selecting files.
 
 WARNING! PiRTO was developed and tested with PAL consoles, but for NTSC you need to use the .NTSC firmware that include longer delays for NTSC console

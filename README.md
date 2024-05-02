@@ -34,9 +34,7 @@ https://forums.atariage.com/topic/360687-pirto-preview-new-rto-multicart-powered
 
 ## Ver. 1.1 Upgrade
 New version doesn't use anymore hardcoded delay in bus cycles, so it should work for every Intellivision (NTSC,PAL or SECAM).
-I included two version of the uf2 firmware in binaries folder, since the 270mhz is very overclocked and i found some issue on some of my Pico's.
-The 250mhz is more stable, but not fast enough to handle games with lot of pages (i.e. Antartic Tales).
-
+I included the uf2 firmware in binaries folder.
 
 
 ![ScreenShot](https://raw.githubusercontent.com/aotta/PiRTO/main/pictures/pirto0.jpg)

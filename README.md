@@ -34,7 +34,8 @@ https://forums.atariage.com/topic/360687-pirto-preview-new-rto-multicart-powered
 
 ## Ver. 1.1 Upgrade
 New version doesn't use anymore hardcoded delay in bus cycles, so it should work for every Intellivision (NTSC,PAL or SECAM).
-I included the uf2 firmware in binaries folder.
+I included the uf2 firmware in binaries folder. 
+Note: with this version some games with more than 8/9 map pages (i.e. Antartic Tale, Wizard of War, etc.) don't work. Use 1.0 if you have no timing issues.
 
 
 ![ScreenShot](https://raw.githubusercontent.com/aotta/PiRTO/main/pictures/pirto0.jpg)

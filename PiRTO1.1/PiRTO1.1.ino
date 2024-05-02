@@ -140,7 +140,7 @@ unsigned char busLookup[8];
 
 char RBLo,RBHi;
 #define BINLENGTH  100000L
-#define RAMSIZE  0x2000
+#define RAMSIZE  0x4000
 uint16_t ROM1[BINLENGTH];
 uint16_t RAM[RAMSIZE];
 #define maxHacks 32
@@ -157,6 +157,8 @@ unsigned int ramto =   0;
 unsigned int mapfrom[80];
 unsigned int mapto[80];
 unsigned int maprom[80];
+int mapdelta[80];
+unsigned int mapsize[80];
 unsigned int addrto[80];
 unsigned int RAMused = 0;
 
@@ -353,31 +355,30 @@ void __time_critical_func(loop1()) {   //HandleBUS()
     
        deviceAddress = false;
       
-       while(((gpio_get_all()) & BDIR_PIN_MASK)>>BDIR_PIN);  // wait DIR go low for finish BAR cycle 
+       while(((parallelBus=gpio_get_all()) & BDIR_PIN_MASK)>>BDIR_PIN);  // wait DIR go low for finish BAR cycle 
          
        //asm inline (delRD); //150ns
           
-       parallelBus= gpio_get_all() & 0xFFFF;
-     
-    
+       parallelBus = gpio_get_all()& 0xFFFF; 
+       
+      
        // Load data for DTB here to save time
-           for (int i=0; i < slot+1; i++) {
-            if ((parallelBus >= maprom[i]) && (parallelBus<=addrto[i])) {
+           for (char i=0; i <= slot; i++) {
+            if ((parallelBus - maprom[i]) <= mapsize[i]) {
               if (tipo[i]==0) {
-                dataOut=ROM1[(parallelBus - maprom[i]) + mapfrom[i]];
+                dataOut=ROM1[(parallelBus - mapdelta[i])];
                 deviceAddress = true;
                 break;
               }
               if (tipo[i]==1) {
-                if ((parallelBus & 0xfff)==0xfff) {
-                  checkPage=1;
-                 // Serial.println("ck"); // test to remove
+                if (page[i]==curPage) {
+                  dataOut=ROM1[(parallelBus - mapdelta[i])];
                   deviceAddress = true;
                   break;
                 }
-                if (page[i]==curPage) {
-                  dataOut=ROM1[(parallelBus - maprom[i]) + mapfrom[i]];
-                  deviceAddress = true;
+                if ((parallelBus & 0xfff)==0xfff) {
+                  checkPage=1;
+                   deviceAddress = true;
                   break;
                 }
               }
@@ -434,7 +435,7 @@ void __time_critical_func(loop1()) {   //HandleBUS()
          // NACT, IAB, DW, INTAK
          // -----------------------
          // reconnect to bus
-           //parallelBus2=parallelBus;
+           parallelBus2=parallelBus;
            gpio_set_dir_in_masked(DATA_PIN_MASK);  // to set pins to inputs (bit 0-15)
            gpio_set_mask(DIR_PIN_MASK); //set bus dir to input   
     
@@ -584,13 +585,19 @@ void loadROM() {
           slot++;
           }
         }
+        mapdelta[slot-1]=maprom[slot-1] - mapfrom[slot-1];
+        mapsize[slot-1]=mapto[slot-1] - mapfrom[slot-1];
+
         Serial.print("Slot:");Serial.print(slot-1);
         Serial.print("-From:");Serial.print(mapfrom[slot-1],HEX);
         Serial.print(" to:");Serial.print(mapto[slot-1],HEX);
         Serial.print(" IN:");Serial.print(maprom[slot-1],HEX);
         Serial.print(" tipo:");Serial.print(tipo[slot-1]);
         Serial.print(" page:");Serial.print(page[slot-1]);
-        Serial.print(" addr-to:");Serial.println(addrto[slot-1],HEX);
+        Serial.print(" addr-to:");Serial.print(addrto[slot-1],HEX);
+        Serial.print(" delta:");Serial.print(mapdelta[slot-1],DEC);
+        Serial.print(" size:");Serial.println(mapsize[slot-1],DEC);
+
         }
      }
   }
@@ -717,6 +724,9 @@ void __time_critical_func(IntyMenu()) {
   tipo[0]=0;
   page[0]=0;
   addrto[0]=0x5bff;
+  mapdelta[0]=maprom[0] - mapfrom[0];
+  mapsize[0]=mapto[0] - mapfrom[0];
+    
  //[memattr]
  //$8000 - $9FFF = RAM 16
   RAMused=1;
@@ -727,7 +737,9 @@ void __time_critical_func(IntyMenu()) {
   tipo[1]=2;
   page[1]=0;
   addrto[1]=0x9fff;
-
+  mapdelta[1]=maprom[1] - mapfrom[1];
+  mapsize[1]=mapto[1] - mapfrom[1];
+  
  
   digitalWrite(LED_BUILTIN,HIGH);
   delay(200);

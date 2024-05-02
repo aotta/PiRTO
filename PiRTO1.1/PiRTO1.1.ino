@@ -358,35 +358,30 @@ void __time_critical_func(loop1()) {   //HandleBUS()
           
        parallelBus &= 0xFFFF; 
      
-       //parallelBus2=parallelBus;
+    
        // Load data for DTB here to save time
          
           for (int i=0; i < slot+1; i++) {
             if ((parallelBus >= maprom[i]) && (parallelBus<=addrto[i])) {    
-              if (tipo[i]==1) {
-                if ((parallelBus & 0xfff)==0xfff) {
-                  checkPage=1;
-                 // Serial.println("ck"); // test to remove
-                  deviceAddress = true;
-                  break;
-                }
-              }
               if (tipo[i]==0) {
                 dataOut=ROM1[(parallelBus - maprom[i]) + mapfrom[i]];
                 deviceAddress = true;
-                break;
-           
+               } else
+              if (tipo[i]==1) {
+                if ((parallelBus & 0xfff)==0xfff) {
+                  checkPage=1;
+                  deviceAddress = true;
+                }
                 if (page[i]==curPage) {
                   dataOut=ROM1[(parallelBus - maprom[i]) + mapfrom[i]];
                   deviceAddress = true;
-                  break;
                 }
-              }
+              } else 
               if (tipo[i]==2) {
                 dataOut=RAM[parallelBus - ramfrom];
                 deviceAddress = true;
-                break;
-              }             
+              }        
+            break;     
             }    
           }
    
@@ -435,7 +430,7 @@ void __time_critical_func(loop1()) {   //HandleBUS()
          // NACT, IAB, DW, INTAK
          // -----------------------
          // reconnect to bus
-           
+           parallelBus2=parallelBus;
            gpio_set_dir_in_masked(DATA_PIN_MASK);  // to set pins to inputs (bit 0-15)
            gpio_set_mask(DIR_PIN_MASK); //set bus dir to input   
     
@@ -978,9 +973,9 @@ void __time_critical_func(setup()) {
   // (flash incurs loading latency that prevents us from keeping up with the
   // Intellivision bus).
   //
-  vreg_set_voltage(VREG_VOLTAGE_1_10); // set to 1_15 or 1_20 if you experience some glitches
-  delay(100); // to stabilize voltage
-  set_sys_clock_khz(270000, true); // settled in compiler IDE as 250mhz overclocked
+  //vreg_set_voltage(VREG_VOLTAGE_1_10); // set to 1_15 or 1_20 if you experience some glitches
+  //delay(100); // to stabilize voltage
+  set_sys_clock_khz(250000, true); // settled in compiler IDE as 250mhz overclocked
 
 
  // Initialize the bus state variables
@@ -1045,7 +1040,7 @@ void loop()
   while (i<=40) {
   digitalWrite(LED_BUILTIN,HIGH);
   delay(800);
-  Serial.print("."); //parallelBus2,HEX);Serial.print("-");
+  Serial.print(parallelBus2,HEX);Serial.print("-");
   digitalWrite(LED_BUILTIN,LOW);
   delay(800);
   i++;

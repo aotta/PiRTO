@@ -25,7 +25,6 @@
 #include <SPI.h>
 #include <SD.h>
 
-
 // This are GP pins for SPI0 on the Raspberry Pi Pico board, and connect
 // to different *board* level pinouts.  Check the PCB while wiring.
 // Only certain pins can be used by the SPI hardware, so if you change
@@ -149,6 +148,7 @@ uint16_t HACK[maxHacks];
 uint16_t HACK_CODE[maxHacks];
 
 
+
 unsigned int parallelBus2;
   
 unsigned int romLen;
@@ -164,6 +164,7 @@ unsigned int tipo[80];  // 0-rom / 1-page / 2-ram
 unsigned int page[80];  // page number
 int slot;
 int hacks;
+
 
 uint32_t selectedfile_size;    // BIN file size
 char longfilename[60];         // long file name (trunked) 
@@ -352,36 +353,39 @@ void __time_critical_func(loop1()) {   //HandleBUS()
     
        deviceAddress = false;
       
-       while(((parallelBus=gpio_get_all()) & BDIR_PIN_MASK)); 
+       while(((gpio_get_all()) & BDIR_PIN_MASK)>>BDIR_PIN);  // wait DIR go low for finish BAR cycle 
          
        //asm inline (delRD); //150ns
           
-       parallelBus &= 0xFFFF; 
+       parallelBus= gpio_get_all() & 0xFFFF;
      
     
        // Load data for DTB here to save time
-         
-          for (int i=0; i < slot+1; i++) {
-            if ((parallelBus >= maprom[i]) && (parallelBus<=addrto[i])) {    
+           for (int i=0; i < slot+1; i++) {
+            if ((parallelBus >= maprom[i]) && (parallelBus<=addrto[i])) {
               if (tipo[i]==0) {
                 dataOut=ROM1[(parallelBus - maprom[i]) + mapfrom[i]];
                 deviceAddress = true;
-               } else
+                break;
+              }
               if (tipo[i]==1) {
                 if ((parallelBus & 0xfff)==0xfff) {
                   checkPage=1;
+                 // Serial.println("ck"); // test to remove
                   deviceAddress = true;
+                  break;
                 }
                 if (page[i]==curPage) {
                   dataOut=ROM1[(parallelBus - maprom[i]) + mapfrom[i]];
                   deviceAddress = true;
+                  break;
                 }
-              } else 
+              }
               if (tipo[i]==2) {
                 dataOut=RAM[parallelBus - ramfrom];
                 deviceAddress = true;
-              }        
-            break;     
+                break;
+              } 
             }    
           }
    
@@ -430,7 +434,7 @@ void __time_critical_func(loop1()) {   //HandleBUS()
          // NACT, IAB, DW, INTAK
          // -----------------------
          // reconnect to bus
-           parallelBus2=parallelBus;
+           //parallelBus2=parallelBus;
            gpio_set_dir_in_masked(DATA_PIN_MASK);  // to set pins to inputs (bit 0-15)
            gpio_set_mask(DIR_PIN_MASK); //set bus dir to input   
     
@@ -493,10 +497,12 @@ void loadROM() {
   slot=0;
   hacks=0;
   RAMused=0;
+
   
   while (mapfile.available()) {
     riga=mapfile.readStringUntil('\n');
     Serial.println(riga);
+       
     if (riga.length()>1) {
       String tmp=riga.substring(0,9);
       if (slot==0) {
@@ -589,6 +595,7 @@ void loadROM() {
      }
   }
   
+
   RAM[0x1111]=1;
   RAM[0x651]=0;
   delay(50);
@@ -648,9 +655,9 @@ void loadROM() {
   } else {
     Serial.println("Verify OK");
   }
+
 }
-
-
+ 
 ////////////////////////////////////////////////////////////////////////////////////
 //                     MENU INTELLIVISION
 ////////////////////////////////////////////////////////////////////////////////////    
@@ -1019,8 +1026,7 @@ void __time_critical_func(setup()) {
 
   loadROM();
   
-  RAM[RAMSIZE-1]=222; // for test
-  
+
   delay(200);
   resetCart();
   delay(200);
@@ -1038,14 +1044,18 @@ void loop()
   
   // Initialize GPIO pins
   while (i<=40) {
-  digitalWrite(LED_BUILTIN,HIGH);
-  delay(800);
-  Serial.print(parallelBus2,HEX);Serial.print("-");
-  digitalWrite(LED_BUILTIN,LOW);
+    digitalWrite(LED_BUILTIN,HIGH);
+    delay(800);
+    //Serial.print(parallelBus2,HEX);
+    Serial.print("-");
+    digitalWrite(LED_BUILTIN,LOW);
   delay(800);
   i++;
   }
-  Serial.println("");i=0;
+  Serial.println("");
+  i=0;
+
+  
  }
 
 ////////////////////////////////////////////////////////////////////////////////////

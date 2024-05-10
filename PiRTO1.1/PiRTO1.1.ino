@@ -124,12 +124,12 @@ int D_PIN[] ={0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
 // RTO Inty bus values (BDIR+BC1+BC2) ??  1 2 3 -> 2 3 1
 
 #define BUS_NACT  0b000  //0
-#define BUS_ADAR  0b010  //2
-#define BUS_IAB   0b100  //4
-#define BUS_DTB   0b110  //6
 #define BUS_BAR   0b001  //1
-#define BUS_DW    0b011  //3
+#define BUS_IAB   0b100  //4
 #define BUS_DWS   0b101  //5
+#define BUS_ADAR  0b010  //2
+#define BUS_DW    0b011  //3
+#define BUS_DTB   0b110  //6
 #define BUS_INTAK 0b111  //7
 
 unsigned char busLookup[8];
@@ -527,6 +527,9 @@ void loadROM() {
         mapto[slot]=ramto;
         maprom[slot]=ramfrom;
         addrto[slot]=maprom[slot]+(mapto[slot]-mapfrom[slot]);
+        mapdelta[slot]=maprom[slot] - mapfrom[slot];
+        mapsize[slot]=mapto[slot] - mapfrom[slot];
+
         tipo[slot]=2; // RAM
         RAMused=1;
         slot++;
@@ -1058,7 +1061,7 @@ void loop()
   while (i<=40) {
     digitalWrite(LED_BUILTIN,HIGH);
     delay(800);
-    //Serial.print(parallelBus2,HEX);
+    Serial.print(parallelBus2,HEX);
     Serial.print("-");
     digitalWrite(LED_BUILTIN,LOW);
   delay(800);

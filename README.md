@@ -29,8 +29,9 @@ Error codes (number of led flashes every second then 2 seconds pause):
 
 
 More infor on:
-https://forums.atariage.com/topic/346024-intellivision-rto-multicart-new-multicart/
 https://forums.atariage.com/topic/360687-pirto-preview-new-rto-multicart-powered-by-raspberry-pico/
+
+https://forums.atariage.com/topic/346024-intellivision-rto-multicart-new-multicart/
 
 ## Ver. 1.1 Upgrade
 New version doesn't use anymore hardcoded delay in bus cycles, so it should work for every Intellivision (NTSC,PAL or SECAM).
